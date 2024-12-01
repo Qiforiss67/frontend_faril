@@ -10,13 +10,17 @@ import Loginpeserta from './Loginpeserta.jsx'
 import Errorpage from './Errorpage.jsx'
 import Homepage from './Homepage.jsx'
 import Landingpage from './Landingpage.jsx'
-import Webinarpage from './Detailevent.jsx'
+import Webinarpage from './Webinar.jsx'
 import Adminpage from './admin/Homepage.jsx'
 import Uploadevent from './admin/Uploadevent.jsx'
 import Updateevent from './admin/Updateevent.jsx'
 import Loginadmin from './admin/Loginadmin.jsx'
 import MyEvents from './myevent.jsx'
 import Cardpage from './components/Cardpage.jsx'
+import ProfilePagePersonalInfo from './Profilepage.jsx'
+import ProfilePagePassword from './ProfilePagePassword.jsx'
+import DescriptionPageRegistered from './DescriptionPageRegistered.jsx'
+import PreviewEvent from './PreviewEvent.jsx'
 
 
 const router = createBrowserRouter([
@@ -67,6 +71,22 @@ const router = createBrowserRouter([
   {
     path:"/Myevent",
     element:<MyEvents/>
+  },
+  {
+    path:"/Profile",
+    element:<ProfilePagePersonalInfo/>
+  },
+  {
+    path:"/password",
+    element:<ProfilePagePassword/>
+  },
+  {
+    path:"/myeventsregister",
+    element:<DescriptionPageRegistered/>
+  },
+  {
+    path:"/previewevent",
+    element:<PreviewEvent/>
   }
  
 ])

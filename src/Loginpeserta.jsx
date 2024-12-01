@@ -37,32 +37,30 @@ function Loginpeserta() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     if (isFormValid) {
       try {
-        
-        const response = await fetch('https://campushub.web.id/api/login', { 
+        const response = await fetch('https://campushub.web.id/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
+          body: JSON.stringify({ email, password }),
         });
-
+  
         if (response.ok) {
           const data = await response.json();
           console.log('Login successful:', data);
-
-          
+  
           if (data.token) {
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.token); // Simpan token
           }
-
-          
-          navigate('/Homepage');
+  
+          if (data.user) {
+            localStorage.setItem('user', JSON.stringify(data.user)); // Simpan data user
+          }
+  
+          navigate('/Homepage'); // Redirect ke halaman utama
         } else {
           console.error('Login failed:', response.status);
           alert('Login gagal, periksa kembali email atau password Anda.');
@@ -73,6 +71,7 @@ function Loginpeserta() {
       }
     }
   };
+  
 
   return (
     <motion.div

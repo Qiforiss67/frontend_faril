@@ -5,6 +5,15 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+
+    extend: {
+      height: {
+        '1024': '1024px',
+      },
+      colors: {
+        customBlue: '#027fff',
+      },
+    },    
     extend: {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],

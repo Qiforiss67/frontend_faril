@@ -147,7 +147,7 @@ const MyEvents = () => {
                 <div
                   key={event.id}
                   className="event-box p-4 border border-customBlue rounded-2xl shadow-md hover:shadow-lg transition duration-300 px-4 py-2 flex justify-between items-center"
-                  onClick={() => navigate("/description-registered")}
+                  onClick={() => navigate("/myeventsregister")}
                 >
                   <div className="event-data flex items-center">
                     <img

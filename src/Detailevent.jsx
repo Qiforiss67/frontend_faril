@@ -1,155 +1,141 @@
-import { useState } from "react";
-import profile from "./assets/Image/profile.svg";
-import gambar from "./assets/Image/gambarutama.svg";
-import webinar from "./assets/Image/webinar.svg";
-import seminar from "./assets/Image/seminar.svg";
-import kuliah from "./assets/Image/kuliah.svg";
-import workshop from "./assets/Image/workshop.svg";
-import sertifikasi from "./assets/Image/sertifikasi.svg";
-import circle5 from "./assets/Image/circle5.svg";
-import Cardpage from "./components/Cardpage";
-import circle6 from "./assets/Image/circle6.svg";
-import arrowLeft from "./assets/Image/icon/arrow-circle-left.svg";
-import arrowRight from "./assets/Image/icon/arrow-circle-right.svg";
-import logo from "./assets/Image/logo.svg";
-import detail from "./assets/Image/detail.svg";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
-import { motion } from "framer-motion";
-import Footer from "./components/footer";
+import Poster from "../../../assets/Poster.svg";
+import Ellipse from "../../../assets/Ellipse.svg";
+import Lecturer from "../../../assets/lecturer.svg";
+import "../DetailEvent/DetailEvent.css";
 
-function Webinarpage() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const maxIndex = 4;
+const DetailEvent = () => {
+  const [eventData, setEventData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
 
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex === maxIndex ? 0 : prevIndex + 1));
-  };
+  useEffect(() => {
+    const fetchEventData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("https://campushub.web.id/api/events/6WY6hHeO0tCK/view");
+        if (!response.ok) {
+          throw new Error("Failed to fetch event data");
+        }
+        const data = await response.json();
+        setEventData(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const handlePrev = () => {
-    setActiveIndex((prevIndex) => (prevIndex === 0 ? maxIndex : prevIndex - 1));
-  };
+    fetchEventData();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 500);
 
-  const pageVariants = {
-    initial: { y: "100%" },
-    animate: { y: 0 },
-    exit: { y: "-100%" },
-  };
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader w-16 h-16 border-blue-500 border-t-transparent"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <h1 className="text-red-500 text-2xl font-semibold">Error</h1>
+          <p className="text-red-700 text-lg">{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!eventData) {
+    return null; 
+  }
 
   return (
-    <motion.div
-      className="font-sans flex flex-col box-border w-full"
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={pageVariants}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="font-sans flex flex-col box-border mx-auto w-full">
-        <header className="w-full">
-          <nav className="p-5 bg-white sm:px-0 ">
-            <div className="flex justify-between items-center px-5 tengah:px-5 sm:px-[0]">
-              <img src={logo} alt="Logo" className="sm:max-w-[150px] md:max-w-[229px] tengah:max-w-[180px]" />
-              <ul className="hidden lg:flex gap-8 items-center text-[#003266] text-[20px] font-medium">
-                <Link to="/Homepage">
-                  <li>
-                    <a href="#">Home</a>
-                  </li>
-                </Link>
-                <li>
-                  <a href="#">MyEvents</a>
-                </li>
-                <li>
-                  <ScrollLink
-                    to="aboutus"
-                    smooth={true}
-                    duration={800}
-                    className="cursor-pointer"
-                  >
-                    <p>About Us</p>
-                  </ScrollLink>
-                </li>
-              </ul>
-              <div className="flex items-center gap-4">
-                <img src={profile} alt="Profile" className="hidden sm:block" />
-                <button
-                  onClick={toggleMenu}
-                  className="lg:hidden flex items-center justify-center p-2 w-10 h-10 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none"
-                >
-                  <span className="sr-only">Open main menu</span>
-                  <svg
-                    className="w-5 h-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 17 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M1 1h15M1 7h15M1 13h15"
-                    />
-                  </svg>
-                </button>
+    <div className="detail-event h-[1024px] pt-10 mx-4 lg:mx-20">
+      <div className={`detail-event-container ${isLoaded ? "loaded" : ""}`}>
+        <div className="breadcrumb pt-auto flex ml-2 pb-10">
+          <ol className="list-none flex text-black text-medium">
+            <li>
+              <Link to="#" className="hover:underline">
+                Home
+              </Link>
+            </li>
+            <li className="mx-2"> &gt; </li>
+            <li>
+              <Link to="/" className="hover:underline">
+                {eventData.type}
+              </Link>
+            </li>
+          </ol>
+        </div>
+        <div className="content-box flex flex-col md:flex-row">
+          <div className="PosterEvent w-full md:w-1/2 h-1/2">
+            <img
+              className="w-full h-full object-cover rounded-2xl shadow-lg"
+              src={eventData.poster || Poster}
+              alt="Poster Event"
+            />
+          </div>
+          <div className="description text-left mx-8 mt-4 md:mt-0 md:ml-8">
+            <span className="bg-customBlue font-regular px-8 py-1 rounded-full text-white text-[14px] sm:text-[12px]">
+              {eventData.type}
+            </span>
+            <h1 className="font-bold text-[32px] py-4 sm:text-[24px]">{eventData.title}</h1>
+            <div className="border-b-2 border-[#003266] w-full my-4"></div>
+            <div className="flex gap-2 ml-2">
+              <img src="src/assets/Calendar.svg" alt="Calendar" className="text-4xl sm:text-3xl" />
+              <span className="font-medium text-[16px] sm:text-[14px] mt-2">{eventData.date}</span>
+              <span className="font-medium text-[16px] sm:text-[14px] mt-2 ml-auto mr-2">{eventData.time}</span>
+            </div>
+            <div className="flex gap-2 ml-1 my-4">
+              <i className="ri-map-pin-2-fill text-4xl sm:text-3xl"></i>
+              <span className="font-medium text-[16px] sm:text-[14px] mt-2">{eventData.location}</span>
+              <img src="src/assets/chair.svg" alt="Location" className="text-4xl sm:text-3xl ml-auto" />
+              <span className="font-medium text-[16px] sm:text-[14px] mt-2 mr-2">{eventData.seatsAvailable} Kursi</span>
+            </div>
+            <div className="border-b-2 border-[#003266] w-full my-4"></div>
+            <div className="lecturer flex gap-2 ml-2">
+              <img src={eventData.lecturer.profileImage || Lecturer} alt="Profile" className="text-4xl sm:text-3xl" />
+              <div className="lecturername flex flex-col ml-4">
+                <span className="font-semibold text-[16px] sm:text-[14px]">{eventData.lecturer.name}</span>
+                <span className="text-regular text-[14px] sm:text-[12px]">{eventData.lecturer.position}</span>
               </div>
             </div>
-            {isMenuOpen && (
-  <div className="lg:hidden mt-4">
-    <ul className="flex flex-col space-y-4 text-[#003266] text-[20px] font-medium">
-      <li>
-        <Link to="/Homepage">Home</Link>
-      </li>
-      <li>
-        <Link to="/MyEvent">MyEvent</Link>
-      </li>
-      <li>
-        <ScrollLink
-          to="aboutus"
-          smooth={true}
-          duration={800}
-          className="cursor-pointer"
-        >
-          <p>About Us</p>
-        </ScrollLink>
-      </li>
-    </ul>
-  </div>
-)}
-
-
-            <img
-              src={detail}
-              alt="Detail gambar"
-              className="w-full sm:px-0 tengah:px-[62px]  mt-5"
-            />
-          </nav>
-        </header>
-
-        <div className="bg-[#EAF4FF] border-transparent rounded-t-[100px] flex flex-col mt-12 items-center">
-          <h1 className="font-semibold text-[32px] sm:text-[32px] md:text-[48px] text-[#003266] mt-10 mb-10">
-            Jelajahi Acara Unggulan
-          </h1>
-          <div className="flex flex-wrap justify-center">
-            <Cardpage />
-            <img
-              src={circle6}
-              alt="Dekorasi lingkaran"
-              className="absolute left-0 top-[1300px]"
-            />
+            <div className="border-b-2 border-[#003266] w-full my-4"></div>
+            <div>
+              <p className="eventdescription font-regular text-wrap text-[16px] sm:text-[14px] block w-full max-w-[486px]">
+                {eventData.description}
+              </p>
+            </div>
+          </div>
+          <div className="booking w-full md:w-4/12 h-36 px-6 mx-auto bg-white shadow-lg rounded-2xl flex flex-col mt-4 md:mt-0">
+            <h1 className="text-left my-4 font-semibold text-[20px] sm:text-[18px] pl-2">Pesan Sekarang!</h1>
+            <button
+              className="bg-customBlue font-regular w-full h-11 my-4 rounded-lg text-medium text-white text-[16px] sm:text-[14px]"
+              onClick={() => navigate("/preview-event")}
+            >
+              Pesan
+            </button>
           </div>
         </div>
       </div>
-      <div id="aboutus">
-        <Footer />
+      <div className="fixed bottom-0 left-0 -z-10">
+        <img src={Ellipse} alt="Background" className="w-[300px]" />
       </div>
-    </motion.div>
+    </div>
   );
-}
+};
 
-export default Webinarpage;
+export default DetailEvent;

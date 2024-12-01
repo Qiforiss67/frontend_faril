@@ -30,7 +30,15 @@ function Homepage() {
   const [trendingCount, setTrendingCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
-  const maxIndex = 4; 
+  const [user, setUser] = useState(null);
+  const maxIndex = 4;
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));  
+    }
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,7 +51,7 @@ function Homepage() {
     });
   }, []);
 
-  // Carousel handlers
+
   const handleNext = () => {
     setActiveIndex((prevIndex) => (prevIndex === maxIndex ? 0 : prevIndex + 1));
   };
@@ -68,7 +76,7 @@ function Homepage() {
     >
       
       <header className="bg-[#003266] w-full">
-        <nav className="sm:px-[0px] tengah:p-6 bg-white w-full lg:px-10 xl:px-[85px] py-5">
+        <nav className="sm:px-[0px] tengah:p- bg-white w-full lg:px-10 xl:px-[85px] py-5">
           <div className="flex justify-between items-center w-full">
             <img
               src={logo}
@@ -99,11 +107,11 @@ function Homepage() {
 
             <div className="flex items-center gap-x-3">
              
-              <img
+             <Link to="/profile"> <img
                 src={profile}
                 alt="Profile"
                 className=" hidden sm:block"
-              />
+              /></Link>
 
               
               <button
