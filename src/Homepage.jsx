@@ -15,6 +15,7 @@ import arrowLeft from "./assets/Image/icon/arrow-circle-left.svg";
 import arrowRight from "./assets/Image/icon/arrow-circle-right.svg";
 import logo from "./assets/Image/logo.svg";
 import { motion } from "framer-motion";
+import Footer from "./components/footer";
 
 const pageVariants = {
   initial: { y: "100%" },
@@ -68,7 +69,14 @@ function Homepage() {
                 <a href="#">MyEvents</a>
               </li>
               <li>
-                <a href="#">About Us</a>
+              <ScrollLink
+              to="aboutus"
+              smooth={true}
+              duration={800}
+              className=" flex justify-center cursor-pointer"
+            >
+              <p>About Us</p>
+            </ScrollLink>
               </li>
             </ul>
 
@@ -175,16 +183,16 @@ function Homepage() {
       />
 
       
-      <div className="flex flex-col gap-y-[12px] mb-[12px]">
+      <div className="flex flex-col gap-y-[12px] mb-[12px]" id="kategori">
         <h1 className="flex justify-center mt-[12px] items-center font-semibold text-[32px]">
           Kategori
         </h1>
         <div>
           <ul className="flex gap-x-[64px] justify-center">
-            <Link to="/Webinar">
+            
             <li>
-              <img src={webinar} alt="Webinar" />
-            </li></Link>
+            <Link to="/Webinar"><img src={webinar} alt="Webinar" /></Link>
+            </li>
             <li>
               <img src={seminar} alt="Seminar" />
             </li>
@@ -220,7 +228,7 @@ function Homepage() {
         </div>
 
         
-        <div className="flex items-center gap-3 gap-x-10 mt-8">
+        <div className="flex items-center gap-3 gap-x-10 mt-8 mb-8">
           <img
             src={arrowLeft}
             alt="Panah kiri"
@@ -243,6 +251,9 @@ function Homepage() {
             onClick={handleNext}
           />
         </div>
+      </div>
+      <div id="aboutus">
+      <Footer></Footer>
       </div>
     </motion.div>
   );

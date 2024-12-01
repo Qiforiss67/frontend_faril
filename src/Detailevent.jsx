@@ -14,6 +14,8 @@ import arrowRight from "./assets/Image/icon/arrow-circle-right.svg";
 import logo from "./assets/Image/logo.svg";
 import detail from "./assets/Image/detail.svg";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import Footer from "./components/footer";
 
 function Webinarpage() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,7 +34,21 @@ function Webinarpage() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const pageVariants = {
+    initial: { y: "100%" },
+    animate: { y: 0 },
+    exit: { y: "-100%" },
+  };
+
   return (
+    <motion.div
+      className="font-sans flex flex-col box-border w-full"
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
+      transition={{ duration: 0.5 }}
+    >
     <div className="font-sans flex flex-col box-border mx-auto w-full">
       
       <header className="w-full">
@@ -108,7 +124,7 @@ function Webinarpage() {
         </div>
 
         
-        <div className="flex items-center gap-3 gap-x-10 mt-8">
+        <div className="flex items-center gap-3 gap-x-10 mt-8 mb-8">
           <img
             src={arrowLeft}
             alt="Panah kiri"
@@ -133,6 +149,8 @@ function Webinarpage() {
         </div>
       </div>
     </div>
+    <Footer/>
+    </motion.div>
   );
 }
 

@@ -15,6 +15,7 @@ import Adminpage from './admin/Homepage.jsx'
 import Uploadevent from './admin/Uploadevent.jsx'
 import Updateevent from './admin/Updateevent.jsx'
 import Loginadmin from './admin/Loginadmin.jsx'
+import MyEvents from './myevent.jsx'
 
 
 const router = createBrowserRouter([
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/Loginadmin",
     element:<Loginadmin/>
+  },
+  {
+    path:"/Myevent",
+    element:<MyEvents/>
   }
  
 ])

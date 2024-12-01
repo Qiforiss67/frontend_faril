@@ -35,10 +35,42 @@ function Loginpeserta() {
 
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
     if (isFormValid) {
-      navigate('/Homepage');
+      try {
+        // Ganti URL endpoint ke URL login yang benar
+        const response = await fetch('https://campushub.web.id/api/login', { 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Login successful:', data);
+
+          // Simpan token ke localStorage jika ada
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+          }
+
+          // Arahkan ke halaman berikutnya (Homepage)
+          navigate('/Homepage');
+        } else {
+          console.error('Login failed:', response.status);
+          alert('Login gagal, periksa kembali email atau password Anda.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat login.');
+      }
     }
   };
 

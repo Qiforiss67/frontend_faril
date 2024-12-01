@@ -14,10 +14,20 @@ import circle6 from "./assets/Image/circle6.svg";
 import arrowLeft from "./assets/Image/icon/arrow-circle-left.svg";
 import arrowRight from "./assets/Image/icon/arrow-circle-right.svg";
 import logo from "./assets/Image/logo.svg";
+import Footer from "./components/footer";
+import { motion } from "framer-motion";
 
 function Landingpage() {
+
+  const pageVariants = {
+    initial: { y: "100%" },
+    animate: { y: 0 },
+    exit: { y: "-100%" },
+  };
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const maxIndex = 4; 
 
   
@@ -34,8 +44,22 @@ function Landingpage() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleMyEventClick = () => {
+    if (!isLoggedIn) {
+      alert("Anda harus login terlebih dahulu untuk mengakses MyEvent.");
+      return;
+    }
+  };
+
   return (
-    <div className="font-sans flex flex-col box-border  w-full">
+    <motion.div 
+    className="font-sans flex flex-col box-border w-full"
+    initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
+      transition={{ duration: 0.5 }}
+    >
       <header className="bg-[#003266] w-full max-[1000px] ">
         <nav className=" sm:px-[0px] md:p-5 tengah:px-6 bg-white w-full lg:px-10 xl:px-[85px] py-5 ">
           <div className="flex justify-between items-center  px-[0px] w-full ">
@@ -44,19 +68,32 @@ function Landingpage() {
               <img src={logo} alt="Logo" className="sm:max-w-[150px] md:max-w-[229px] tengah:max-w-[180px]" />
             </div>
 
-            
-            
-
-           
             <ul className="hidden lg:flex space-x-8 items-center text-[#003266] text-[20px] font-medium">
               <li>
               <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="#">MyEvents</a>
+              {isLoggedIn ? (
+                  <Link to="/Myevent">MyEvents</Link>
+                ) : (
+                  <button
+                    onClick={handleMyEventClick}
+                    className="text-[#003266] font-medium text-[20px] cursor-pointer"
+                  >
+                    MyEvents
+                  </button>
+                )}
               </li>
+              
               <li>
-                <a href="#">About Us</a>
+              <ScrollLink
+              to="aboutus"
+              smooth={true}
+              duration={800}
+              className=" flex justify-center cursor-pointer"
+            >
+              <p>About Us</p>
+            </ScrollLink>
               </li>
             </ul>
 
@@ -103,13 +140,25 @@ function Landingpage() {
             <div className="lg:hidden mt-4">
               <ul className="flex flex-col space-y-4 text-[#003266] text-[20px] font-medium">
                 <li>
-                  <Link to="/Landingpage">Home</Link>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="#">MyEvents</a>
+                <button
+                    onClick={handleMyEventClick}
+                    className="text-[#003266] font-medium text-[20px] cursor-pointer"
+                  >
+                    MyEvents
+                  </button>
                 </li>
                 <li>
-                  <a href="#">About Us</a>
+                <ScrollLink
+              to="aboutus"
+              smooth={true}
+              duration={1000}
+              className="cursor-pointer"
+            >
+              <p>About Us</p>
+            </ScrollLink>
                 </li>
               </ul>
             </div>
@@ -187,7 +236,7 @@ function Landingpage() {
           <Cardpage />
           <img src={circle6} alt="Circle dekorasi" className="absolute left-0 top-[1300px]" />
         </div>
-        <div className="flex items-center gap-3 gap-x-10 mt-8">
+        <div className="flex items-center gap-3 gap-x-10 mt-8 mb-8">
           <img
             src={arrowLeft}
             alt="Panah kiri"
@@ -211,7 +260,10 @@ function Landingpage() {
           />
         </div>
       </div>
-    </div>
+      <div id="aboutus">
+      <Footer/>
+      </div>
+      </motion.div>
   );
 }
 
