@@ -1,71 +1,116 @@
-import Card from "../fragment/card"
-import budi from "../assets/Image/budi.svg"
-import figma from "../assets/image/figma.svg"
-import digital from "../assets/Image/digital.svg"
-import tamayo from "../assets/Image/tamayo.svg"
-import iot from "../assets/Image/iot.svg"
-import ahmad from "../assets/Image/ahmad.svg"
-import bio from "../assets/Image/bio.svg"
-import kenji from "../assets/Image/kenji.svg"
-import anak from "../assets/Image/anak.svg"
-import grace from "../assets/Image/grace.svg"
-import web from "../assets/image/web.svg"
-import haryanto from "../assets/Image/haryanto.svg"
+import React, { useEffect, useState } from "react";
+import Card from "../fragment/Card";
+import { getevents } from "../../services/getevents";
+import arrowLeft from "../assets/Image/icon/arrow-circle-left.svg";
+import arrowRight from "../assets/Image/icon/arrow-circle-right.svg";
 
-function Cardpage() {
-    return(
-        <div className="flex flex-wrap justify-around px-14 gap-y-10 relative z-10">
-            <Card>
-            <Card.Image image={figma}></Card.Image>
-            <Card.Kategori kategori="Webinar">Khusus UB</Card.Kategori>
-            <Card.Body title="Figma UI UX Design">Gunakan Figma untuk mecari pekerjaan di bidang UI Design dan UX Researcher...</Card.Body>
-            <Card.Tanggal>8 Maret 2024</Card.Tanggal>
-            <Card.Creator image={budi} nama="Budiman Darmono" title="UI UX Designer"></Card.Creator>
-            </Card>
+const Cardpage = () => {
+    const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const eventsPerPage = 6;
 
-            <Card>
-            <Card.Image image={digital}></Card.Image>
-            <Card.Kategori kategori="Seminar">Publik</Card.Kategori>
-            <Card.Body title="Digital Business">Temukan strategi terkini dan praktis untuk mengoptimalkan bisnis Anda di era digital...</Card.Body>
-            <Card.Tanggal>12 Februari 2024</Card.Tanggal>
-            <Card.Creator image={tamayo} nama="Tamayo Kento" title="Digital Marketer"></Card.Creator>
-            </Card>
+    useEffect(() => {
+        setLoading(true);
+        getevents((data) => {
+            if (data.length > 0) {
+                setEvents(data);
+                setError(null);
+            } else {
+                setError("Tidak ada data acara.");
+            }
+            setLoading(false);
+        });
+    }, []);
 
-            <Card>
-            <Card.Image image={iot}></Card.Image>
-            <Card.Kategori kategori="Seminar">Khusus UB</Card.Kategori>
-            <Card.Body title="Pengoptimalan IOT">Memberikan wawasan mendalam untuk meningkatkan inovasi melalui teknologi IoT...</Card.Body>
-            <Card.Tanggal>30 Maret 2024</Card.Tanggal>
-            <Card.Creator image={ahmad} nama="Ahmad Wirianto" title="Dosen Teknik Elektro, Universitas Brawijaya"></Card.Creator>
-            </Card>
+    
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+    const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
-            <Card>
-            <Card.Image image={bio}></Card.Image>
-            <Card.Kategori kategori="Kuliah Tamu">Khusus UB</Card.Kategori>
-            <Card.Body title="Biomedik Dasar">Gunakan Figma untuk mecari pekerjaan di bidang UI Design dan UX Researcher...</Card.Body>
-            <Card.Tanggal>23 April 2024</Card.Tanggal>
-            <Card.Creator image={kenji} nama="dr. Muhammad Kenji, s.ked" title="Dokter"></Card.Creator>
-            </Card>
+   
+    const nextPage = () => {
+        if (currentPage < Math.ceil(events.length / eventsPerPage)) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
-            <Card>
-            <Card.Image image={anak}></Card.Image>
-            <Card.Kategori kategori="Seminar">Publik</Card.Kategori>
-            <Card.Body title="Perlindungan Hak Anak">Memahami hak dan perlindungan anak-anak dengan keunikan khusus...</Card.Body>
-            <Card.Tanggal>29 Mei 2024</Card.Tanggal>
-            <Card.Creator image={grace} nama="Gracec Nomali" title="Aktivis"></Card.Creator>
-            </Card>
+    
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
-            <Card>
-            <Card.Image image={web}></Card.Image>
-            <Card.Kategori kategori="Kuliah Tamu">Khusus UB</Card.Kategori>
-            <Card.Body title="Web Programming">Belajar web programming dengan menggunakan bahasa Javascript...</Card.Body>
-            <Card.Tanggal>1 Juni 2024</Card.Tanggal>
-            <Card.Creator image={budi} nama="Ir. M Haryanto, S.kom" title="Dosen Pemrograman"></Card.Creator>
-            </Card>
+    
+    const goToPage = (page) => {
+        setCurrentPage(page);
+    };
 
+    const maxPage = Math.ceil(events.length / eventsPerPage);
+
+    return (
+        <div className="relative z-10">
+            <div className="flex flex-wrap justify-around px-14 gap-y-10"
+           
+            >
+                {loading ? (
+                    <p>Sedang memuat...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : currentEvents.length > 0 ? (
+                    currentEvents.map((event) => {
+                        const { id, foto_event, category_name, accessibility, judul, deskripsi, date, foto_pembicara, pembicara, role } = event;
+                        return (
+                            <div key={id} className="gap-y-[50px]">
+                                <Card>
+                                    <Card.Image image={foto_event} />
+                                    <Card.Kategori kategori={category_name}>{accessibility}</Card.Kategori>
+                                    <Card.Body title={judul.substring(0, 35)}>{deskripsi}</Card.Body>
+                                    <Card.Tanggal>{date}</Card.Tanggal>
+                                    <Card.Creator
+                                        image={foto_pembicara}
+                                        nama={pembicara}
+                                        title={role}
+                                    />
+                                </Card>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <p>Belum ada acara unggulan saat ini.</p>
+                )}
+            </div>
+
+            
+            <div className="flex justify-center items-center gap-3 mt-8 mb-8">
+            <div className="flex justify-center items-center gap-8 mt-4">
+                <img
+                    src={arrowLeft}
+                    alt="Panah kiri"
+                    className="w-[54px] h-[54px] cursor-pointer sm:w-[40px] md:w-[54px]"
+                    onClick={prevPage}
+                />
+                {[...Array(maxPage)].map((_, index) => (
+                    <span
+                        key={index}
+                        className={`w-[24px] h-[24px] rounded-full cursor-pointer sm:w-[20px] sm:h-[20px] md:w-[24px] md:h-[24px] ${
+                            currentPage === index + 1 ? "bg-[#027FFF]" : "bg-gray-300"
+                        }`}
+                        onClick={() => goToPage(index + 1)}
+                    ></span>
+                ))}
+                <img
+                    src={arrowRight}
+                    alt="Panah kanan"
+                    className="w-[54px] h-[54px] cursor-pointer sm:w-[40px] md:w-[54px]"
+                    onClick={nextPage}
+                />
+            </div>
+            </div>
         </div>
     );
-    
 };
 
 export default Cardpage;

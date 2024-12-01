@@ -16,6 +16,7 @@ import Uploadevent from './admin/Uploadevent.jsx'
 import Updateevent from './admin/Updateevent.jsx'
 import Loginadmin from './admin/Loginadmin.jsx'
 import MyEvents from './myevent.jsx'
+import Cardpage from './components/Cardpage.jsx'
 
 
 const router = createBrowserRouter([

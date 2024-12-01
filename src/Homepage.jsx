@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link } from "react-router-dom";
 import profile from "./assets/Image/profile.svg";
@@ -16,6 +16,7 @@ import arrowRight from "./assets/Image/icon/arrow-circle-right.svg";
 import logo from "./assets/Image/logo.svg";
 import { motion } from "framer-motion";
 import Footer from "./components/footer";
+import { getevents } from "../services/getevents";
 
 const pageVariants = {
   initial: { y: "100%" },
@@ -26,7 +27,21 @@ const pageVariants = {
 function Homepage() {
   const [activeIndex, setActiveIndex] = useState(0); 
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [trendingCount, setTrendingCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [events, setEvents] = useState([]);
   const maxIndex = 4; 
+
+  useEffect(() => {
+    setIsLoading(true);
+    getevents((eventsData) => {
+      if (eventsData.length > 0) {
+        setEvents(eventsData);
+        setTrendingCount(eventsData.length); // Set jumlah trending events
+      }
+      setIsLoading(false);
+    });
+  }, []);
 
   // Carousel handlers
   const handleNext = () => {
@@ -153,7 +168,9 @@ function Homepage() {
             {/* Additional Info */}
             <div className="flex gap-x-[20px] sm:gap-x-[15px] sm:max-w-[200px] lg:gap-x-[20px] tengah:max-w-[530px] ">
               <div className="flex flex-col items-center">
-                <h1 className="font-bold text-[38px] sm:text-[20px] lg:text-[38px] md:text-[38px]">20+</h1>
+                <h1 className="font-bold text-[38px] sm:text-[20px] lg:text-[38px] md:text-[38px]">{isLoading ? "..." : trendingCount}
+                  
+                </h1>
                 <p className="font-normal text-[18px] sm:text-[12px] lg:text-[18px] md:text-[18px]">Trending Events</p>
               </div>
               <div className="flex flex-col items-center">
@@ -224,31 +241,6 @@ function Homepage() {
             src={circle6}
             alt="Circle dekorasi"
             className="absolute left-0 top-[1300px]"
-          />
-        </div>
-
-        
-        <div className="flex items-center gap-3 gap-x-10 mt-8 mb-8">
-          <img
-            src={arrowLeft}
-            alt="Panah kiri"
-            className="w-[54px] h-[54px] cursor-pointer sm:w-[40px] md:w-[54px]"
-            onClick={handlePrev}
-          />
-          {[0, 1, 2, 3, 4].map((index) => (
-            <span
-              key={index}
-              className={`w-[24px] h-[24px] rounded-full cursor-pointer sm:w-[20px] sm:h-[20px] md:w-[24px] md:h-[24px] ${
-                activeIndex === index ? "bg-[#027FFF]" : "bg-gray-300"
-              }`}
-              onClick={() => setActiveIndex(index)}
-            ></span>
-          ))}
-          <img
-            src={arrowRight}
-            alt="Panah kanan"
-            className="w-[54px] h-[54px] cursor-pointer sm:w-[40px] md:w-[54px]"
-            onClick={handleNext}
           />
         </div>
       </div>

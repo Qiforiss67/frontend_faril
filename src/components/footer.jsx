@@ -26,7 +26,7 @@ const Footer = () => {
     <div className="footer bg-[#003266] w-full transition all" id="footer">
       <div className="container">
         <div className="content-box mx-20">
-          <div className="footer-box flex gap-56 mx-auto">
+          <div className="footer-box flex sm:flex-col lg:flex-row gap-56 sm:gap-y-20 mx-auto ">
             <div className="about-us">
               <div className="logo mt-24 pb-8">
                 <Link
@@ -44,7 +44,7 @@ const Footer = () => {
                   <img src={logo} alt="Logo" />
                 </Link>
               </div>
-              <div className="address text-white text-medium text-[14px] mb-20">
+              <div className="address text-white text-medium text-[14px] lg:mb-20 sm:mb-10">
                 <p>Gedung Rektorat Lantai 2</p>
                 <p>Jl. Veteran No.10-11, Ketawanggede</p>
                 <p>Kec. Lowokwaru, Kota Malang, Jawa Timur, 65145</p>
@@ -99,7 +99,8 @@ const Footer = () => {
               </div>
             </div>
             
-            <div className="kategori mt-32">
+            <div className="flex md:gap-56 sm:gap-20">
+            <div className="kategori lg:mt-32 sm:mt-0">
               <span className="text-white mb-6 block text-bold text-[18px] font-semibold">
                 Kategori
               </span>
@@ -132,7 +133,7 @@ const Footer = () => {
               </ul>
             </div>
             
-            <div className="halaman mt-32 flex-col justify-center items-center">
+            <div className="halaman lg:mt-32 sm:mt-0 flex-col justify-center items-center">
               <span className="text-white mb-6 block text-bold text-[18px] font-semibold">
                 Halaman
               </span>
@@ -175,6 +176,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
+          </div>
           </div>
 
 

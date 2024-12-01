@@ -122,31 +122,6 @@ function Webinarpage() {
           <Cardpage />
           <img src={circle6} alt="Dekorasi lingkaran" className="absolute left-0 top-[1300px]" />
         </div>
-
-        
-        <div className="flex items-center gap-3 gap-x-10 mt-8 mb-8">
-          <img
-            src={arrowLeft}
-            alt="Panah kiri"
-            className="w-[54px] h-[54px] cursor-pointer sm:w-[40px] md:w-[54px]"
-            onClick={handlePrev}
-          />
-          {[0, 1, 2, 3, 4].map((index) => (
-            <span
-              key={index}
-              className={`w-[24px] h-[24px] rounded-full cursor-pointer sm:w-[20px] sm:h-[20px] md:w-[24px] md:h-[24px] ${
-                activeIndex === index ? "bg-[#027FFF]" : "bg-gray-300"
-              }`}
-              onClick={() => setActiveIndex(index)}
-            ></span>
-          ))}
-          <img
-            src={arrowRight}
-            alt="Panah kanan"
-            className="w-[54px] h-[54px] cursor-pointer sm:w-[40px] md:w-[54px]"
-            onClick={handleNext}
-          />
-        </div>
       </div>
     </div>
     <Footer/>

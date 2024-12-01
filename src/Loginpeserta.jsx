@@ -56,12 +56,12 @@ function Loginpeserta() {
           const data = await response.json();
           console.log('Login successful:', data);
 
-          // Simpan token ke localStorage jika ada
+          
           if (data.token) {
             localStorage.setItem('token', data.token);
           }
 
-          // Arahkan ke halaman berikutnya (Homepage)
+          
           navigate('/Homepage');
         } else {
           console.error('Login failed:', response.status);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom'; // Pastikan useNavigate diimpor
+import { Link, useNavigate } from 'react-router-dom'; 
 import circle from './assets/Image/circle3.svg';
 import circle2 from './assets/Image/circle4.svg';
 import logo from './assets/Image/logo2.svg';
@@ -24,7 +24,7 @@ function Signinpeserta() {
   const [responseMessage, setResponseMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // Inisialisasi navigate untuk mengarahkan ke halaman lain setelah registrasi berhasil
+  const navigate = useNavigate(); 
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -33,7 +33,7 @@ function Signinpeserta() {
     setErrorMessage('');
   };
 
-  // Handle phone number input change
+  
   const handlePhoneChange = (e) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
@@ -42,7 +42,7 @@ function Signinpeserta() {
     }
   };
 
-  // Form submission handler
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -51,12 +51,12 @@ function Signinpeserta() {
       return;
     }
 
-    const baseUrl = 'https://campushub.web.id/api'; // Ganti dengan URL API Anda
+    const baseUrl = 'https://campushub.web.id/api';
     const endpoint = `${baseUrl}/register`;
 
     setLoading(true);
     try {
-      console.log('Mengirim data ke endpoint:', endpoint); // Debugging log
+      console.log('Mengirim data ke endpoint:', endpoint); 
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -71,32 +71,32 @@ function Signinpeserta() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Ambil data error dari API
-        console.error('Error response:', errorData); // Log error response untuk debugging
+        const errorData = await response.json(); 
+        console.error('Error response:', errorData); 
         throw new Error(`Error ${response.status}: ${errorData.message || response.statusText}`);
       }
 
       const responseData = await response.json();
-      console.log('Response data:', responseData); // Debugging log
+      console.log('Response data:', responseData); 
       setResponseMessage(`Registrasi berhasil: ${responseData.message}`);
       setFormData({ nama: '', email: '', password: '', telepon: '' });
 
       setTimeout(() => {
-        navigate('/Loginpeserta'); // Pindahkan ke halaman login setelah 2 detik
-      }, 1000); // 2 detik delay
+        navigate('/Loginpeserta'); 
+      }, 1000); 
 
     } catch (error) {
-      console.error('Registrasi gagal:', error); // Log jika terjadi kesalahan
+      console.error('Registrasi gagal:', error); 
       setErrorMessage(`Registrasi gagal: ${error.message}`);
     } finally {
       setLoading(false);
     }
   };
 
-  // Check if the form is valid
+  
   const isFormValid = Object.values(formData).every((value) => value.trim() !== '');
 
-  // Toggle password visibility
+  
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
