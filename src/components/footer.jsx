@@ -168,6 +168,8 @@ const Footer = () => {
                   <Link to="/MyEvent" onClick={handleScrollToTop}>
                     MyEvent
                   </Link>
+
+                 
                 </li>
                 <li>
                   <Link to="/AboutUs" onClick={handleScrollToTop}>

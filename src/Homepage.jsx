@@ -37,7 +37,7 @@ function Homepage() {
     getevents((eventsData) => {
       if (eventsData.length > 0) {
         setEvents(eventsData);
-        setTrendingCount(eventsData.length); // Set jumlah trending events
+        setTrendingCount(eventsData.length); 
       }
       setIsLoading(false);
     });
@@ -68,12 +68,12 @@ function Homepage() {
     >
       
       <header className="bg-[#003266] w-full">
-        <nav className="sm:px-[0px] md:p-5 bg-white w-full lg:px-10 xl:px-[85px] py-5">
+        <nav className="sm:px-[0px] tengah:p-6 bg-white w-full lg:px-10 xl:px-[85px] py-5">
           <div className="flex justify-between items-center w-full">
             <img
               src={logo}
               alt="Logo"
-              className="sm:max-w-[150px] md:max-w-[229px]"
+              className="sm:max-w-[150px] md:max-w-[229px] tengah:max-w-[180px]"
             />
 
             <ul className="hidden lg:flex space-x-8 items-center text-[#003266] text-[20px] font-medium">
@@ -81,7 +81,9 @@ function Homepage() {
                 <a href="#">Home</a>
               </li></Link>
               <li>
-                <a href="#">MyEvents</a>
+              <Link to="/MyEvent">
+                    MyEvent
+                  </Link>
               </li>
               <li>
               <ScrollLink
@@ -136,10 +138,19 @@ function Homepage() {
                   <a href="#">Home</a>
                 </li>
                 <li>
-                  <a href="#">MyEvents</a>
+                <Link to="/MyEvent">
+                    MyEvent
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">About Us</a>
+                <ScrollLink
+              to="aboutus"
+              smooth={true}
+              duration={800}
+              className=" cursor-pointer"
+            >
+              <p>About Us</p>
+            </ScrollLink>
                 </li>
               </ul>
               

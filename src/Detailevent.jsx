@@ -14,6 +14,7 @@ import arrowRight from "./assets/Image/icon/arrow-circle-right.svg";
 import logo from "./assets/Image/logo.svg";
 import detail from "./assets/Image/detail.svg";
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 import { motion } from "framer-motion";
 import Footer from "./components/footer";
 
@@ -49,82 +50,104 @@ function Webinarpage() {
       variants={pageVariants}
       transition={{ duration: 0.5 }}
     >
-    <div className="font-sans flex flex-col box-border mx-auto w-full">
-      
-      <header className="w-full">
-        <nav className="p-5 bg-white sm:px-0 ">
-          <div className="flex justify-between items-center px-5 tengah:px-[62px] sm:px-[0]">
-            <img src={logo} alt="Logo" className="" />
-            <ul className="hidden lg:flex gap-8 items-center text-[#003266] text-[20px] font-medium">
-              <Link to="/Homepage">
+      <div className="font-sans flex flex-col box-border mx-auto w-full">
+        <header className="w-full">
+          <nav className="p-5 bg-white sm:px-0 ">
+            <div className="flex justify-between items-center px-5 tengah:px-5 sm:px-[0]">
+              <img src={logo} alt="Logo" className="sm:max-w-[150px] md:max-w-[229px] tengah:max-w-[180px]" />
+              <ul className="hidden lg:flex gap-8 items-center text-[#003266] text-[20px] font-medium">
+                <Link to="/Homepage">
+                  <li>
+                    <a href="#">Home</a>
+                  </li>
+                </Link>
                 <li>
-                  <a href="#">Home</a>
+                  <a href="#">MyEvents</a>
                 </li>
-              </Link>
-              <li>
-                <a href="#">MyEvents</a>
-              </li>
-              <li>
-                <a href="#">About Us</a>
-              </li>
-            </ul>
-            <div className="flex items-center gap-4">
-              <img src={profile} alt="Profile" className="hidden sm:block" />
-              <button
-                onClick={toggleMenu}
-                className="lg:hidden flex items-center justify-center p-2 w-10 h-10 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none"
-              >
-                <span className="sr-only">Open main menu</span>
-                <svg
-                  className="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 17 14"
+                <li>
+                  <ScrollLink
+                    to="aboutus"
+                    smooth={true}
+                    duration={800}
+                    className="cursor-pointer"
+                  >
+                    <p>About Us</p>
+                  </ScrollLink>
+                </li>
+              </ul>
+              <div className="flex items-center gap-4">
+                <img src={profile} alt="Profile" className="hidden sm:block" />
+                <button
+                  onClick={toggleMenu}
+                  className="lg:hidden flex items-center justify-center p-2 w-10 h-10 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 1h15M1 7h15M1 13h15"
-                  />
-                </svg>
-              </button>
+                  <span className="sr-only">Open main menu</span>
+                  <svg
+                    className="w-5 h-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 17 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M1 1h15M1 7h15M1 13h15"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
+            {isMenuOpen && (
+  <div className="lg:hidden mt-4">
+    <ul className="flex flex-col space-y-4 text-[#003266] text-[20px] font-medium">
+      <li>
+        <Link to="/Homepage">Home</Link>
+      </li>
+      <li>
+        <Link to="/MyEvent">MyEvent</Link>
+      </li>
+      <li>
+        <ScrollLink
+          to="aboutus"
+          smooth={true}
+          duration={800}
+          className="cursor-pointer"
+        >
+          <p>About Us</p>
+        </ScrollLink>
+      </li>
+    </ul>
+  </div>
+)}
+
+
+            <img
+              src={detail}
+              alt="Detail gambar"
+              className="w-full sm:px-0 tengah:px-[62px]  mt-5"
+            />
+          </nav>
+        </header>
+
+        <div className="bg-[#EAF4FF] border-transparent rounded-t-[100px] flex flex-col mt-12 items-center">
+          <h1 className="font-semibold text-[32px] sm:text-[32px] md:text-[48px] text-[#003266] mt-10 mb-10">
+            Jelajahi Acara Unggulan
+          </h1>
+          <div className="flex flex-wrap justify-center">
+            <Cardpage />
+            <img
+              src={circle6}
+              alt="Dekorasi lingkaran"
+              className="absolute left-0 top-[1300px]"
+            />
           </div>
-          {isMenuOpen && (
-            <ul className="flex flex-col mt-4 text-[#003266] text-[20px] font-medium lg:hidden">
-              <Link to="/Homepage">
-                <li className="py-2 px-5">
-                  <a href="#">Home</a>
-                </li>
-              </Link>
-              <li className="py-2 px-5">
-                <a href="#">MyEvents</a>
-              </li>
-              <li className="py-2 px-5">
-                <a href="#">About Us</a>
-              </li>
-            </ul>
-          )}
-
-          <img src={detail} alt="Detail gambar" className="w-full sm:px-0 tengah:px-[62px]  mt-5" />
-        </nav>
-        
-      </header>
-
-      
-      <div className="bg-[#EAF4FF] border-transparent rounded-t-[100px] flex flex-col mt-12 items-center">
-        <h1 className="font-semibold text-[32px] sm:text-[32px] md:text-[48px] text-[#003266] mt-10 mb-10">
-          Jelajahi Acara Unggulan
-        </h1>
-        <div className="flex flex-wrap justify-center">
-          <Cardpage />
-          <img src={circle6} alt="Dekorasi lingkaran" className="absolute left-0 top-[1300px]" />
         </div>
       </div>
-    </div>
-    <Footer/>
+      <div id="aboutus">
+        <Footer />
+      </div>
     </motion.div>
   );
 }
