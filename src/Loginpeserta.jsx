@@ -40,7 +40,7 @@ function Loginpeserta() {
 
     if (isFormValid) {
       try {
-        // Ganti URL endpoint ke URL login yang benar
+        
         const response = await fetch('https://campushub.web.id/api/login', { 
           method: 'POST',
           headers: {
